@@ -1,0 +1,22 @@
+<div *ngIf="data$ | async as data">
+  <stitch-paginator
+    [previous]="data.previous"
+    [next]="data.next"
+    [pages]="getPossiblePages(data.count)"
+    [page]="page"
+    (goto)="setPage($event)"
+  ></stitch-paginator>
+  <table>
+    <tr>
+      <th *ngFor="let c of cellList">{{ c }}</th>
+    </tr>
+    <tr *ngFor="let ship of data.results" (click)="navigateToDetails(ship.url)">
+      <td *ngFor="let c of cellList">
+        <ng-template [stitchDynDir]="c" [stitchDynDirData]="ship"></ng-template>
+      </td>
+    </tr>
+  </table>
+
+  <pre data-test="cell37">{{ data.results[0].created }}</pre>
+  <pre>{{ data.results[0].created | date: "d,MMM :) YYYY" }}</pre>
+</div>
